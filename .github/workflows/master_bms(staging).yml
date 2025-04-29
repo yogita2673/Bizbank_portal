@@ -67,6 +67,17 @@ jobs:
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
+      - name: Build React App
+        working-directory: ./Frontend
+        run: |
+           npm install
+           npm run build
+
+      - name: Copy React Build to Backend
+        run: |
+           mkdir -p Backend/Frontend
+           cp -r Frontend/build Backend/Frontend/
+
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'bms'
